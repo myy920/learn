@@ -28,6 +28,7 @@ public class WebConfig {
     }
 
     // 创建DispatcherServlet
+    // DispatcherServlet 初始化方法 onRefresh()
     @Bean
     public DispatcherServlet dispatcherServlet() {
         return new DispatcherServlet();

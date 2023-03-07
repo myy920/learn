@@ -16,7 +16,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.List;
 
-public class Demo {
+public class A19 {
 
     public static void main(String[] args) throws Throwable {
         GenericApplicationContext context = new GenericApplicationContext();

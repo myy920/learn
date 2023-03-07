@@ -31,9 +31,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 静态动态通知
+ * 静态通知
  */
-public class Demo {
+public class A18 {
 
     public static void main(String[] args) throws Throwable {
         Target target = new Target();
