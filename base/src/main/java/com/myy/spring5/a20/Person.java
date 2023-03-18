@@ -2,9 +2,11 @@ package com.myy.spring5.a20;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.yaml.snakeyaml.Yaml;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class Person {
 
