@@ -87,3 +87,7 @@ public class Demo {
 切面=切点Pointcut+通知Advice
 
 切点表达式类AspectJExpressionPointcut
+
+## 高级切面转换成低级切面
+
+高级切面@Aspect在使用时都会转换成低级切面Advisor, 如下:

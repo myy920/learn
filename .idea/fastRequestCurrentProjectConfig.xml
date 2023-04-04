@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="fastRequestCurrentProjectConfig">
+    <option name="dataList">
+      <list>
+        <NameGroup>
+          <option name="hostGroup">
+            <list>
+              <HostGroup>
+                <option name="env" value="dev" />
+                <option name="url" value="http://localhost:8080" />
+              </HostGroup>
+            </list>
+          </option>
+          <option name="name" value="dev" />
+        </NameGroup>
+      </list>
+    </option>
+    <option name="domain" value="http://localhost:8080" />
+    <option name="enableEnv" value="dev" />
+    <option name="enableProject" value="dev" />
+    <option name="envList">
+      <list>
+        <option value="dev" />
+      </list>
+    </option>
+    <option name="projectList">
+      <list>
+        <option value="dev" />
+      </list>
+    </option>
+  </component>
+</project>
