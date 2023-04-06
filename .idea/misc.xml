@@ -5,6 +5,10 @@
       <list>
         <option value="$PROJECT_DIR$/spring/pom.xml" />
         <option value="$PROJECT_DIR$/mybatis-plus/pom.xml" />
+        <option value="$PROJECT_DIR$/JVM/pom.xml" />
+        <option value="$PROJECT_DIR$/java/pom.xml" />
+        <option value="$PROJECT_DIR$/linux/pom.xml" />
+        <option value="$PROJECT_DIR$/DB/pom.xml" />
       </list>
     </option>
   </component>
