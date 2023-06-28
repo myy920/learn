@@ -10,19 +10,12 @@
         <module name="spring" />
         <module name="JVM" />
         <module name="java" />
+        <module name="sse" />
+        <module name="linux" />
         <module name="mybatis-plus" />
         <module name="DB" />
-        <module name="linux" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="DB" target="1.8" />
-      <module name="java" target="1.8" />
-      <module name="JVM" target="1.8" />
-      <module name="linux" target="1.8" />
-      <module name="mybatis-plus" target="1.8" />
-      <module name="spring" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>服务器向Web推送消息</title>
+</head>
+<body>
+
+<botton onclick="sseMessage()">sseMessage</botton>
+
+</body>
+
+<script>
+
+    function sseMessage() {
+        let eventSource = new EventSource("http://localhost:8080/test/sse");
+        eventSource.addEventListener('open', e => {
+            console.log("open...");
+        })
+        eventSource.addEventListener('error', e => {
+            console.log("error...");
+        })
+        eventSource.addEventListener('message', e => {
+            console.log("message: " + e.data);
+        })
+    }
+
+</script>
+
+</html>

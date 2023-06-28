@@ -5,7 +5,7 @@ begin
     return xin;
 end;
 
-set global log_bin_trust_function_creators=TRUE;
+set global log_bin_trust_function_creators = TRUE;
 show global variables like '%function%';
 
 select create_name();
