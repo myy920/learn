@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BILIBILI</title>
+</head>
+<body>
+
+<button onclick="f1()">f1</button>
+
+
+
+
+</body>
+
+<script>
+
+    function f1() {
+        new HttpREQ
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "http://localhost:8080/octetStream/f1");
+        xhr.responseType = "document";
+        xhr.setRequestHeader("Sec-Fetch-Dest", "document");
+        xhr.setRequestHeader("Sec-Fetch-Mode", "navigate");
+        xhr.setRequestHeader("Sec-Fetch-Site", "none");
+        xhr.send();
+    }
+
+</script>
+
+</html>
