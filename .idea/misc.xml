@@ -19,7 +19,29 @@
         <option value="$PROJECT_DIR$/concurrent/pom.xml" />
         <option value="$PROJECT_DIR$/miniWeb/pom.xml" />
         <option value="$PROJECT_DIR$/io/pom.xml" />
+        <option value="$PROJECT_DIR$/hibernate/pom.xml" />
+        <option value="$PROJECT_DIR$/office/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/DB/pom.xml" />
+        <option value="$PROJECT_DIR$/JVM/pom.xml" />
+        <option value="$PROJECT_DIR$/concurrent/pom.xml" />
+        <option value="$PROJECT_DIR$/hibernate/pom.xml" />
+        <option value="$PROJECT_DIR$/io/pom.xml" />
+        <option value="$PROJECT_DIR$/java/pom.xml" />
+        <option value="$PROJECT_DIR$/linux/pom.xml" />
+        <option value="$PROJECT_DIR$/lock/pom.xml" />
+        <option value="$PROJECT_DIR$/miniWeb/pom.xml" />
+        <option value="$PROJECT_DIR$/mybatis-plus/pom.xml" />
+        <option value="$PROJECT_DIR$/nonrepeat/pom.xml" />
+        <option value="$PROJECT_DIR$/octet-stream/pom.xml" />
+        <option value="$PROJECT_DIR$/office/pom.xml" />
+        <option value="$PROJECT_DIR$/spring/pom.xml" />
+        <option value="$PROJECT_DIR$/sqlScript/pom.xml" />
+        <option value="$PROJECT_DIR$/task/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="1.8" project-jdk-type="JavaSDK">
