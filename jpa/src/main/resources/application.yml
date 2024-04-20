@@ -1,0 +1,19 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.111.128:3306/test_jpa?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: Root*123
+    type: com.zaxxer.hikari.HikariDataSource # 数据源配置
+  jpa:
+    database: mysql                # 配置数据库方言。使用JPA访问数据库时
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect    # 配置数据库引擎，不配置则默认为myisam引擎
+    open-in-view: true
+    properties:
+      hibernate:
+        show_sql: true		# 日志打印执行的SQL。与spring.jpa.show-sql配置效果相同，两者使用其一即可。
+        format_sql: true        # 格式化sql语句
+    hibernate:
+      ddl-auto: none    # 每次程序启动时的数据库初始化策略

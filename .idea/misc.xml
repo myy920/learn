@@ -21,6 +21,7 @@
         <option value="$PROJECT_DIR$/io/pom.xml" />
         <option value="$PROJECT_DIR$/hibernate/pom.xml" />
         <option value="$PROJECT_DIR$/office/pom.xml" />
+        <option value="$PROJECT_DIR$/jpa/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
