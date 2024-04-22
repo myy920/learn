@@ -5,13 +5,15 @@ import com.myy.service.dto.DocumentDTO;
 import com.myy.util.page.PageResult;
 import org.springframework.data.domain.Pageable;
 
-public interface DocService {
+public interface DocumentService {
 
-    void createDoc(DocumentDTO dto);
+    void createDocument(DocumentDTO dto);
 
-    void updateDoc(DocumentDTO dto);
+    void updateDocument(DocumentDTO dto);
 
-    void deleteDoc(Long id);
+    void deleteDocument(Long id);
+
+    void updateLastVersion(String title);
 
     PageResult<DocumentDTO> queryDocs(DocCriteria criteria, Pageable pageable);
 

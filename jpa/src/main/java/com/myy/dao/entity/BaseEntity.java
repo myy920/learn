@@ -24,7 +24,6 @@ public class BaseEntity {
     private String creator;
 
     @CreatedDate
-    //@Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_time", nullable = false)
     private LocalDateTime createTime;
 
@@ -33,7 +32,6 @@ public class BaseEntity {
     private String updater;
 
     @LastModifiedDate
-    //@Temporal(TemporalType.TIMESTAMP)
     @Column(name = "update_time", nullable = false)
     private LocalDateTime updateTime;
 

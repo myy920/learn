@@ -4,7 +4,7 @@ import com.myy.dao.entity.DocumentEntity;
 import com.myy.service.dto.DocumentDTO;
 import org.springframework.beans.BeanUtils;
 
-public class DocAdapter {
+public class DocumentAdapter {
 
     public static DocumentEntity toEntity(DocumentDTO dto) {
         DocumentEntity entity = new DocumentEntity();

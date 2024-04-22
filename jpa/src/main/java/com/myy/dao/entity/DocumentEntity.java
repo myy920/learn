@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "t_document")
+@Table(name = "test_document")
 public class DocumentEntity extends BaseEntity {
 
     @Id
