@@ -8,12 +8,14 @@ import com.myy.service.dto.DocCriteria;
 import com.myy.service.dto.DocumentDTO;
 import com.myy.util.page.PageResult;
 import com.myy.util.redis.RedisUtils;
+import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.event.TransactionalEventListener;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
@@ -107,5 +109,11 @@ public class DocumentServiceImpl implements DocumentService {
                 }
                 return null;
             }).filter(Objects::nonNull).collect(Collectors.toList())));
+    }
+
+    @TransactionalEventListener
+    @EventListener
+    public void listener(){
+
     }
 }
