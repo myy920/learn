@@ -41,4 +41,12 @@ public class DocumentController {
         return Result.ok(wordService.queryDocs(criteria, pageable));
     }
 
+    @Resource
+    private EdmHandler edmHandler;
+
+    @GetMapping("/test")
+    public void test(){
+        edmHandler.execute();
+    }
+
 }

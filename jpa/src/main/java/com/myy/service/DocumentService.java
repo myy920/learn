@@ -17,4 +17,6 @@ public interface DocumentService {
 
     PageResult<DocumentDTO> queryDocs(DocCriteria criteria, Pageable pageable);
 
+    void edmDelete(String docId);
+
 }

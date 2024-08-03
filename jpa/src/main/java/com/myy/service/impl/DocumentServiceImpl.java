@@ -8,13 +8,17 @@ import com.myy.service.dto.DocCriteria;
 import com.myy.service.dto.DocumentDTO;
 import com.myy.util.page.PageResult;
 import com.myy.util.redis.RedisUtils;
-import org.springframework.context.event.EventListener;
+import lombok.Getter;
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 import org.springframework.util.CollectionUtils;
 
@@ -99,21 +103,42 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     private static Pageable check(Pageable pageable) {
-        return PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(),
-            Sort.by(pageable.getSort().stream().map(order -> {
-                if ("version".equals(order.getProperty())) {
-                    return order.withProperty("version");
-                }
-                if ("createTime".equals(order.getProperty())) {
-                    return order.withProperty("createTime");
-                }
-                return null;
-            }).filter(Objects::nonNull).collect(Collectors.toList())));
+        return PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(pageable.getSort().stream().map(order -> {
+            if ("version".equals(order.getProperty())) {
+                return order.withProperty("version");
+            }
+            if ("createTime".equals(order.getProperty())) {
+                return order.withProperty("createTime");
+            }
+            return null;
+        }).filter(Objects::nonNull).collect(Collectors.toList())));
     }
 
-    @TransactionalEventListener
-    @EventListener
-    public void listener(){
+    @Resource
+    private ApplicationEventPublisher applicationEventPublisher;
+
+    @Override
+    @Transactional(propagation = Propagation.MANDATORY)
+    public void edmDelete(String docId) {
+        applicationEventPublisher.publishEvent(new EdmDeleteEvent(docId));
+    }
+
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT, classes = EdmDeleteEvent.class)
+    public void listener(EdmDeleteEvent event) {
+        System.out.printf("delete edm docId = %s%n", event.getDocId());
+    }
+
+
+    @Getter
+    public static class EdmDeleteEvent extends ApplicationEvent {
+
+        private final String docId;
+
+        public EdmDeleteEvent(String docId) {
+            super(docId);
+            this.docId = docId;
+        }
 
     }
+
 }
