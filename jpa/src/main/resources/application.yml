@@ -13,7 +13,11 @@ spring:
     open-in-view: true
     properties:
       hibernate:
-        show_sql: true		# 日志打印执行的SQL。与spring.jpa.show-sql配置效果相同，两者使用其一即可。
+        show_sql: true        # 日志打印执行的SQL。与spring.jpa.show-sql配置效果相同，两者使用其一即可。
         format_sql: true        # 格式化sql语句
     hibernate:
       ddl-auto: none    # 每次程序启动时的数据库初始化策略
+logging:
+  level:
+    com.myy: debug
+    org.springframework.jdbc.core.JdbcTemplate: debug
