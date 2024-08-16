@@ -35,4 +35,14 @@ public class TestController {
     public Result<Page<DocumentEntity>> pageDocument2(Pageable pageable, @RequestBody DocCriteria docCriteria) {
         return Result.ok(documentViewService.pageDocument2(docCriteria, pageable));
     }
+
+    @PostMapping("/v1/document/page3")
+    public Result<Page<DocumentEntity>> pageDocument3(Pageable pageable, @RequestBody DocCriteria docCriteria) {
+        return Result.ok(documentViewService.pageDocument3(docCriteria, pageable));
+    }
+
+    @PostMapping("/v1/document/page4")
+    public Result<Page<DocumentEntity>> pageDocument4(Pageable pageable, @RequestBody DocCriteria docCriteria) {
+        return Result.ok(documentViewService.pageDocument4(docCriteria, pageable));
+    }
 }

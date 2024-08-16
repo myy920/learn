@@ -3,6 +3,7 @@ package com.myy.service.impl;
 import com.myy.dao.entity.DocumentEntity;
 import com.myy.service.dto.DocCriteria;
 import com.myy.util.page.PageResult;
+import com.myy.util.page.Query;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -75,8 +76,8 @@ public class DocumentViewService {
     }
 
     public Page<DocumentEntity> pageDocument2(DocCriteria criteria, Pageable pageable) {
-        @Language("sql") String sql = "select * from test_document where true ${CONDITION1} ${CONDITION2} ${ORDER}";
-        return new Query(sql).condition((condition, param) -> {
+        @Language("sql") String sql = "select * from test_document where ${CONDITION}";
+        return new Query0(sql).condition((condition, param) -> {
             StringBuilder condition1 = condition.apply("CONDITION1");
             StringBuilder condition2 = condition.apply("CONDITION2");
             if (CollectionUtils.isNotEmpty(criteria.getTitles())) {
@@ -111,7 +112,7 @@ public class DocumentViewService {
         }).pageResult(pageable.getPageNumber(), pageable.getPageSize(), DocumentEntity.class);
     }
 
-    public class Query {
+    public class Query0 {
 
         private String sql;
 
@@ -119,11 +120,11 @@ public class DocumentViewService {
 
         private final MapSqlParameterSource parameterSource = new MapSqlParameterSource();
 
-        public Query(String sql) {
+        public Query0(String sql) {
             this.sql = sql;
         }
 
-        public Query condition(BiConsumer<Function<String, StringBuilder>, MapSqlParameterSource> buildSqlParam) {
+        public Query0 condition(BiConsumer<Function<String, StringBuilder>, MapSqlParameterSource> buildSqlParam) {
             Function<String, StringBuilder> newCondition = name -> {
                 StringBuilder builder = new StringBuilder();
                 conditionMap.put(name, builder);
@@ -150,5 +151,67 @@ public class DocumentViewService {
         }
     }
 
+    public Page<DocumentEntity> pageDocument3(DocCriteria criteria, Pageable pageable) {
+        return new Query("select * from test_document").setCondition((part, query) -> {
+            if (CollectionUtils.isNotEmpty(criteria.getTitles())) {
+                part.and("title in (:titles)");
+                query.addValue("titles", criteria.getTitles());
+            }
+            if (StringUtils.isNotEmpty(criteria.getContentLike())) {
+                part.and("content like :content");
+                query.addValue("content", '%' + criteria.getContentLike() + '%');
+            }
+            if (StringUtils.isNotEmpty(criteria.getVersion())) {
+                part.and("version = :version");
+                query.addValue("version", criteria.getVersion());
+            }
+            if (Objects.nonNull(criteria.getIsLastVersion())) {
+                part.and("is_last_version = :isLastVersion");
+                query.addValue("isLastVersion", criteria.getIsLastVersion());
+            }
+        }).setOrder("create_time desc").setPage(pageable.getPageNumber(), pageable.getPageSize()).getPageResult(DocumentEntity.class);
+    }
+
+    public Page<DocumentEntity> pageDocument4(DocCriteria criteria, Pageable pageable) {
+        Query query = new Query("select * from test_document where ${CONDITION1} AND ${CONDITION2} ${ORDER}");
+        Query.Part condition1 = query.newPart("CONDITION1", Query.PartType.CONDITION_SQL);
+        Query.Part condition2 = query.newPart("CONDITION2", Query.PartType.CONDITION_SQL);
+        Query.Part order = query.newPart("ORDER", Query.PartType.DATA_SQL);
+        if (CollectionUtils.isNotEmpty(criteria.getTitles())) {
+            condition1.and("title IN (:titles)");
+            condition2.and("title IN (:titles)");
+            query.addValue("titles", criteria.getTitles());
+        }
+        if (StringUtils.isNotEmpty(criteria.getContentLike())) {
+            condition1.and("content LIKE :content");
+            condition2.and("content LIKE :content");
+            query.addValue("content", '%' + criteria.getContentLike() + '%');
+        }
+        if (StringUtils.isNotEmpty(criteria.getVersion())) {
+            condition1.and("version = :version");
+            condition2.and("version = :version");
+            query.addValue("version", criteria.getVersion());
+        }
+        if (Objects.nonNull(criteria.getIsLastVersion())) {
+            condition1.and("is_last_version = :isLastVersion");
+            condition2.and("is_last_version = :isLastVersion");
+            query.addValue("isLastVersion", criteria.getIsLastVersion());
+        }
+        order.append("ORDER BY").append(buildDocument4OrderSql(pageable));
+        query.setPage(pageable.getPageNumber(), pageable.getPageSize());
+        return query.getPageResult(DocumentEntity.class);
+    }
+
+    private String buildDocument4OrderSql(Pageable pageable) {
+        Sort sort = pageable.getSort();
+        Sort.Order sOrder;
+        if (Objects.nonNull(sOrder = sort.getOrderFor("createTime"))) {
+            return "create_time " + (sOrder.isAscending() ? "ASC" : "DESC");
+        }
+        if (Objects.nonNull(sOrder = sort.getOrderFor("updateTime"))) {
+            return "update_time " + (sOrder.isAscending() ? "ASC" : "DESC");
+        }
+        return "create_time DESC";
+    }
 
 }
