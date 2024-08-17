@@ -206,10 +206,10 @@ public class DocumentViewService {
         Sort sort = pageable.getSort();
         Sort.Order sOrder;
         if (Objects.nonNull(sOrder = sort.getOrderFor("createTime"))) {
-            return "create_time " + (sOrder.isAscending() ? "ASC" : "DESC");
+            return "create_time" + Query.direct(sOrder);
         }
         if (Objects.nonNull(sOrder = sort.getOrderFor("updateTime"))) {
-            return "update_time " + (sOrder.isAscending() ? "ASC" : "DESC");
+            return "update_time" + Query.direct(sOrder);
         }
         return "create_time DESC";
     }

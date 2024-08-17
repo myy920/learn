@@ -10,6 +10,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -24,6 +25,8 @@ public class Query {
     private static final String CONDITION = "CONDITION";
     private static final String ORDER = "ORDER";
     private static final String LIMIT = "LIMIT";
+    private static final String ASC = "ASC";
+    private static final String DESC = "DESC";
 
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate = JdbcTemplateService.get();
 
@@ -79,7 +82,7 @@ public class Query {
         public String toPartSql() {
             String partSql = stringBuilder.toString();
             if (PartType.CONDITION_SQL.equals(partType)) {
-                return partSql.isEmpty() ? DEFAULT_CONDITION_SQL : partSql.replaceFirst("(?i)(^\\s*)and", " ");
+                return partSql.isEmpty() ? DEFAULT_CONDITION_SQL : partSql.replaceFirst("(?i)(^\\s*)(and|or)", " ");
             } else {
                 return partSql;
             }
@@ -124,7 +127,7 @@ public class Query {
     public <R> Page<R> getPageResult(Class<R> rClass) {
         String countSql = originSql;
         for (Part part : parts) {
-            countSql = replaceAll(countSql, part.getName(), PartType.CONDITION_SQL.equals(part.getPartType()) ? part.toPartSql() : "");
+            countSql = replacePart(countSql, part.getName(), PartType.CONDITION_SQL.equals(part.getPartType()) ? part.toPartSql() : "");
         }
         countSql = "SELECT COUNT(*) FROM (" + countSql + ") as XXX";
         Long count = namedParameterJdbcTemplate.queryForObject(countSql, parameterSource, Long.class);
@@ -133,13 +136,18 @@ public class Query {
         }
         String dataSql = originSql;
         for (Part part : parts) {
-            dataSql = replaceAll(dataSql, part.getName(), part.toPartSql());
+            dataSql = replacePart(dataSql, part.getName(), part.toPartSql());
         }
         List<R> data = namedParameterJdbcTemplate.query(dataSql, parameterSource, new BeanPropertyRowMapper<>(rClass));
         return new PageImpl<>(data, Pageable.unpaged(), count);
     }
 
-    private String replaceAll(String sql, String name, String partSql) {
+    private String replacePart(String sql, String name, String partSql) {
         return sql.replaceAll("\\$\\{" + name + "}", partSql);
     }
+
+    public static String direct(Sort.Order order) {
+        return " " + (order.isAscending() ? ASC : DESC);
+    }
+
 }
